@@ -1,0 +1,5 @@
+extensions:
+	security: Librette\SecurityExtension\DI\SecurityExtension
+services:
+	formFactory: Librette\Forms\FormFactory
+	doctrineFormFactory: Librette\Doctrine\Forms\FormFactory

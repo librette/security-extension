@@ -1,0 +1,29 @@
+{
+	"name": "librette/security-extension",
+	"keywords": ["nette", "librette", "security"],
+	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"authors": [
+		{
+			"name": "David Matějka",
+			"homepage": "http://www.matej21.cz"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"kdyby/doctrine": "@dev",
+		"librette/doctrine": "@dev",
+		"librette/forms": "@dev",
+		"librette/doctrine-forms": "@dev",
+		"librette/security-namespaces": "@dev",
+		"nette/nette": "@dev"
+	},
+	"require-dev": {
+		"nette/tester": "@dev"
+	},
+	"autoload": {
+		"psr-4": {
+			"Librette\\SecurityExtension\\": "src/"
+		},
+		"files": ["src/exceptions.php"]
+	}
+}

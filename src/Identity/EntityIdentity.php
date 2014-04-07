@@ -104,7 +104,9 @@ class EntityIdentity extends Nette\Object implements Nette\Security\IIdentity
 	{
 		if ($this->entity) {
 			try {
-				return $this->entity->{$name};
+				$value = $this->entity->{$name};
+
+				return $value;
 			} catch (MemberAccessException $e) {
 			}
 		}

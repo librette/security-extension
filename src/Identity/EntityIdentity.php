@@ -37,6 +37,8 @@ class EntityIdentity extends Nette\Object implements Nette\Security\IIdentity
 		$this->id = $entity->getId();
 		$this->entity = $entity;
 		$this->roles = $roles;
+		$this->loaded = TRUE;
+		$this->entityClass = get_class($this->entity);
 	}
 
 
@@ -60,8 +62,6 @@ class EntityIdentity extends Nette\Object implements Nette\Security\IIdentity
 
 	public function __sleep()
 	{
-		$this->entityClass = get_class($this->entity);
-
 		return array("id", "entityClass");
 	}
 

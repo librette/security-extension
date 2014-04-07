@@ -3,7 +3,7 @@ namespace Librette\SecurityExtension\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\BaseEntity;
-use Nette\Security\Passwords;
+use Librette\SecurityExtension\Passwords;
 
 
 /**

@@ -3,7 +3,9 @@ namespace Librette\SecurityExtension\Components\EditForm;
 
 use Librette\Doctrine\Forms\FormFactory;
 use Librette\Forms\Form;
+use Librette\SecurityExtension\InvalidSecurityNamespaceException;
 use Librette\SecurityExtension\Models\IUser;
+use Librette\SecurityNamespaces\INamespaceDetector;
 use Nette\Application\UI\Control;
 
 /**
@@ -12,7 +14,7 @@ use Nette\Application\UI\Control;
 class EditControl extends Control
 {
 
-	public $onSave = array();
+	public $onSave = [];
 
 	/** @var IUser */
 	protected $user;
@@ -23,15 +25,21 @@ class EditControl extends Control
 	/** @var bool */
 	protected $allowPasswordEdit = FALSE;
 
+	/** @var \Librette\SecurityExtension\SecurityNamespace */
+	protected $namespace;
+
 
 	/**
 	 * @param IUser $user
 	 * @param FormFactory $formFactory
 	 */
-	public function __construct(IUser $user, FormFactory $formFactory)
+	public function __construct(IUser $user, FormFactory $formFactory, INamespaceDetector $namespaceDetector)
 	{
 		$this->user = $user;
 		$this->formFactory = $formFactory;
+		$this->namespace = $namespaceDetector->getNamespace();
+		InvalidSecurityNamespaceException::validate($this->namespace);
+		$this->namespace->validateUser($user);
 	}
 
 
@@ -59,7 +67,9 @@ class EditControl extends Control
 	public function createComponentForm()
 	{
 		$form = $this->formFactory->create($this->user);
-		$form->addText('username', 'Username');
+		if ($this->namespace->isNamed()) {
+			$form->addText('username', 'Username');
+		}
 		$form->addText('email', 'E-mail');
 		if ($this->allowPasswordEdit) {
 			$form->addPassword('password', 'Password');
@@ -78,6 +88,7 @@ class EditControl extends Control
 		if (!$this->template->getFile()) {
 			$this->template->setFile(__DIR__ . '/editControl.latte');
 		}
+		$this->template->isNamed = $this->namespace->isNamed();
 		$this->template->render();
 	}
 

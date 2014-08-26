@@ -1,9 +1,9 @@
 <?php
 namespace Librette\SecurityExtension;
 
-use Kdyby\Doctrine\EntityDao;
 use Librette\SecurityExtension\Identity\EntityIdentity;
 use Librette\SecurityExtension\Models\IUser;
+use Librette\SecurityNamespaces\INamespaceDetector;
 use Nette\Object;
 use Nette\Security as NS;
 
@@ -13,23 +13,27 @@ use Nette\Security as NS;
 class Authenticator extends Object implements NS\IAuthenticator
 {
 
-	/** @var EntityDao */
-	protected $userDao;
+	/** @var \Librette\SecurityNamespaces\INamespaceDetector */
+	protected $namespaceDetector;
 
 
 	/**
-	 * @param EntityDao $dao
+	 * @param INamespaceDetector $namespaceDetector
 	 */
-	public function __construct(EntityDao $dao)
+	public function __construct(INamespaceDetector $namespaceDetector)
 	{
-		$this->userDao = $dao;
+		$this->namespaceDetector = $namespaceDetector;
 	}
 
 
 	public function authenticate(array $credentials)
 	{
+		/** @var SecurityNamespace $namespace */
+		$namespace = $this->namespaceDetector->getNamespace();
+		InvalidSecurityNamespaceException::validate($namespace);
 		list($username, $password) = $credentials;
-		$user = $this->userDao->findOneBy(array(strpos($username, '@') === FALSE ? 'username' : 'email' => $username));
+		$field = $namespace->isNamed() && strpos($username, '@') === FALSE ? 'username' : 'email';
+		$user = $namespace->getDao()->findOneBy([$field => $username]);
 		$this->validateUser($user, $username);
 		$this->validatePassword($user, $password);
 

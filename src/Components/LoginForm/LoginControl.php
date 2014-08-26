@@ -40,7 +40,7 @@ class LoginControl extends Control
 	public function createComponentForm()
 	{
 		$form = $this->formFactory->create();
-		$form->addText('username', 'Username')->setRequired();
+		$form->addText('email', 'E-mail')->setRequired();
 		$form->addPassword('password', 'Password')->setRequired();
 		$form->addSubmit('ok', 'Login');
 		$form->onSuccess[] = $this->processLoginForm;
@@ -56,7 +56,7 @@ class LoginControl extends Control
 	{
 		$data = $form->getValues();
 		try {
-			$this->user->login($data->username, $data->password);
+			$this->user->login($data->email, $data->password);
 			$this->onLogin($this, $this->user->identity);
 		} catch (AuthenticationException $e) {
 			$form->addError($e->getMessage());

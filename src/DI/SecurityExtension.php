@@ -56,9 +56,9 @@ class SecurityExtension extends CompilerExtension implements IEntityProvider
 					->addSetup('setDao', [$this->prefix("@$name.dao")])
 					->addTag(SecurityNamespacesExtension::SECURITY_NAMESPACE_TAG, ['name' => $name]);
 
-			$builder->addDefinition($this->prefix($name . '.createUserCommand'))
+/*			$builder->addDefinition($this->prefix($name . '.createUserCommand'))
 					->setClass('\Librette\SecurityExtension\Commands\CreateUserCommand', [$this->prefix("@$name.securityNamespace")])
-					->addTag(ConsoleExtension::COMMAND_TAG);
+					->addTag(ConsoleExtension::COMMAND_TAG);*/
 		}
 	}
 

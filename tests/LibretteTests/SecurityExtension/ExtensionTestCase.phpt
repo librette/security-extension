@@ -30,15 +30,15 @@ class ExtensionTestCase extends TestCase
 	{
 		$user = new UserEntity();
 		/** @var \Librette\SecurityExtension\Components\EditForm\EditControlFactory $editControlFactory */
-		$editControlFactory = $this->container->getByType('\Librette\SecurityExtension\Components\EditForm\EditControlFactory');
+		$editControlFactory = $this->container->getByType('Librette\SecurityExtension\Components\EditForm\EditControlFactory');
 		Assert::type('\Librette\SecurityExtension\Components\EditForm\EditControl', $editControlFactory->create($user));
 
 		/** @var \Librette\SecurityExtension\Components\LoginForm\LoginControlFactory $loginControlFactory */
-		$loginControlFactory = $this->container->getByType('\Librette\SecurityExtension\Components\LoginForm\LoginControlFactory');
+		$loginControlFactory = $this->container->getByType('Librette\SecurityExtension\Components\LoginForm\LoginControlFactory');
 		Assert::type('\Librette\SecurityExtension\Components\LoginForm\LoginControl', $loginControlFactory->create());
 
 		/** @var \Librette\SecurityExtension\Components\PasswordForm\PasswordControlFactory $passwordControlFactory */
-		$passwordControlFactory = $this->container->getByType('\Librette\SecurityExtension\Components\PasswordForm\PasswordControlFactory');
+		$passwordControlFactory = $this->container->getByType('Librette\SecurityExtension\Components\PasswordForm\PasswordControlFactory');
 		Assert::type('\Librette\SecurityExtension\Components\PasswordForm\PasswordControl', $passwordControlFactory->create($user));
 	}
 }

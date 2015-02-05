@@ -23,16 +23,16 @@ class SecurityExtension extends CompilerExtension implements IEntityProvider
 		$config = $this->getConfig($this->defaults);
 		$builder = $this->getContainerBuilder();
 		$builder->addDefinition($this->prefix('editControlFactory'))
-				->setImplement('\Librette\SecurityExtension\Components\EditForm\EditControlFactory')
-				->setClass('\Librette\SecurityExtension\Components\EditForm\EditControl')
+				->setImplement('Librette\SecurityExtension\Components\EditForm\EditControlFactory')
+				->setClass('Librette\SecurityExtension\Components\EditForm\EditControl')
 				->setArguments([new PhpLiteral('$user')]);
 
 		$builder->addDefinition($this->prefix('loginControlFactory'))
-				->setImplement('\Librette\SecurityExtension\Components\LoginForm\LoginControlFactory');
+				->setImplement('Librette\SecurityExtension\Components\LoginForm\LoginControlFactory');
 
 		$builder->addDefinition($this->prefix('passwordControlFactory'))
-				->setImplement('\Librette\SecurityExtension\Components\PasswordForm\PasswordControlFactory')
-				->setClass('\Librette\SecurityExtension\Components\PasswordForm\PasswordControl')
+				->setImplement('Librette\SecurityExtension\Components\PasswordForm\PasswordControlFactory')
+				->setClass('Librette\SecurityExtension\Components\PasswordForm\PasswordControl')
 				->setArguments([new PhpLiteral('$user')]);
 
 		/** @var INamespaceProvider $ext */
@@ -44,20 +44,20 @@ class SecurityExtension extends CompilerExtension implements IEntityProvider
 					->setFactory('@doctrine.dao', [$class]);
 
 			$builder->addDefinition($this->prefix($name . '.authenticator'))
-					->setClass('\Librette\SecurityExtension\Authenticator')
+					->setClass('Librette\SecurityExtension\Authenticator')
 					->setAutowired(FALSE);
 
 			$builder->addDefinition($this->prefix($name . '.identityInitializer'))
-					->setClass('\Librette\SecurityExtension\Identity\EntityIdentityInitializer');
+					->setClass('Librette\SecurityExtension\Identity\EntityIdentityInitializer');
 
 			$builder->addDefinition($this->prefix($name . '.securityNamespace'))
-					->setClass('\Librette\SecurityExtension\SecurityNamespace')
+					->setClass('Librette\SecurityExtension\SecurityNamespace')
 					->setArguments([$name, $this->prefix("@$name.authenticator"), NULL, $this->prefix("@$name.identityInitializer")])
 					->addSetup('setDao', [$this->prefix("@$name.dao")])
 					->addTag(SecurityNamespacesExtension::SECURITY_NAMESPACE_TAG, ['name' => $name]);
 
 /*			$builder->addDefinition($this->prefix($name . '.createUserCommand'))
-					->setClass('\Librette\SecurityExtension\Commands\CreateUserCommand', [$this->prefix("@$name.securityNamespace")])
+					->setClass('Librette\SecurityExtension\Commands\CreateUserCommand', [$this->prefix("@$name.securityNamespace")])
 					->addTag(ConsoleExtension::COMMAND_TAG);*/
 		}
 	}

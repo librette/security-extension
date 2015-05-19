@@ -2,7 +2,7 @@
 namespace Librette\SecurityExtension\Components\LoginForm;
 
 use Librette\Forms\Form;
-use Librette\Forms\FormFactory;
+use Librette\Forms\IFormFactory;
 use Nette\Application\UI\Control;
 use Nette\Security\AuthenticationException;
 use Nette\Security\User;
@@ -18,15 +18,15 @@ class LoginControl extends Control
 	/** @var \Nette\Security\User */
 	protected $user;
 
-	/** @var \Librette\Forms\FormFactory */
+	/** @var IFormFactory */
 	protected $formFactory;
 
 
 	/**
-	 * @param User $user
-	 * @param FormFactory $formFactory
+	 * @param User
+	 * @param IFormFactory
 	 */
-	public function __construct(User $user, FormFactory $formFactory)
+	public function __construct(User $user, IFormFactory $formFactory)
 	{
 		$this->user = $user;
 		$this->formFactory = $formFactory;

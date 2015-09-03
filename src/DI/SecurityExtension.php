@@ -41,7 +41,7 @@ class SecurityExtension extends CompilerExtension implements IEntityProvider
 		}
 		foreach ($config['namespaces'] as $name => $class) {
 			$builder->addDefinition($this->prefix($name . '.dao'))
-					->setFactory('@doctrine.dao', [$class]);
+					->setFactory('@Doctrine\ORM\EntityManager::getRepository', [$class]);
 
 			$builder->addDefinition($this->prefix($name . '.authenticator'))
 					->setClass('Librette\SecurityExtension\Authenticator')

@@ -43,7 +43,7 @@ class LoginControl extends Control
 		$form->addText('email', 'E-mail')->setRequired();
 		$form->addPassword('password', 'Password')->setRequired();
 		$form->addSubmit('ok', 'Login');
-		$form->onSuccess[] = $this->processLoginForm;
+		$form->onSuccess[] = [$this, 'processLoginForm'];
 
 		return $form;
 	}
